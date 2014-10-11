@@ -1,0 +1,66 @@
+div.cover{
+	display:table;
+	margin: auto;
+}
+
+ul.list_music li {
+	font-size: 14px;
+	list-style:none;
+	display: table;
+}
+
+div.clear {
+	clear:both;
+}
+
+div.span6 {
+	/*width: 568px;*/
+	float: left;
+	border-radius:10px;
+	background: rgba(5, 10, 0, 0.35);
+	height: 320px;
+	margin:5px;
+	padding:10px;
+	width:560px;
+}
+
+div.span6 video.video {
+	height: 300px;
+}
+
+span.credit_extra {
+	display: none;
+}
+
+span.tecla {
+	position: relative;
+	float: right;
+	right: 113px;
+	background: none repeat scroll 0 0 #666666;
+	padding: 5px;
+	height: 30px;
+	width: 78px;
+}
+
+h4.credit_number{
+	position: relative;
+	float: left;
+	left: 30px;
+	/*background: none repeat scroll 0 0 #666666;*/
+}
+
+span.credit_number {
+	position: relative;
+	float: left;
+	left: 213px;
+	background: none repeat scroll 0 0 #666666;
+	padding: 5px;
+	height: 30px;
+	width: 78px;
+}
+
+
+div.span6 h3 {
+	margin-bottom: 0;
+    margin-top: 0;
+}

@@ -1,0 +1,114 @@
+{
+    "Genero1": {
+        "artista1": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ],
+        "artista2": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ]
+    },
+    "Genero2": {
+        "artista1": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ],
+        "artista2": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ]
+    },
+    "Genero3":{
+    	"artista1": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ],
+        "artista2": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ]
+    },
+    "Genero4":{
+    	"artista1": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ],
+        "artista2": [
+            "Cancion1",
+            "Cancion2",
+            "Cancion2",
+            "Cancion3",
+            "Cancion4",
+            "Cancion5",
+            "Cancion6",
+            "Cancion7",
+            "Cancion8",
+            "Cancion9",
+            "Cancion10"
+        ]
+    }
+}
