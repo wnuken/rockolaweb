@@ -9,11 +9,10 @@
     <meta name="author" content="">
     <link rel="icon" href="./images/icons/favicon.ico">
 
-    <title>Cover Template for Bootstrap</title>
+    <title>RockolaWeb</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="./css/cover.css" rel="stylesheet">
 

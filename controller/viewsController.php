@@ -3,6 +3,11 @@
 class viewsController
 {
   static public function Home(){
+
+  	//$firstAuthor = AuthorQuery::create()->findPK(1);
+	//var_dump($firstAuthor);
+
+
     include_once './views/home.php';
 
 

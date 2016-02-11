@@ -1,0 +1,31 @@
+<database name="default" defaultIdMethod="native"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+          namespace="Rockolaweb"
+        >
+    <table name="music" phpName="Music">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="title" type="varchar" size="255" required="true"/>
+        <column name="rock_id" type="varchar" size="24" required="true" />
+        <column name="youtube_id" type="varchar" size="24" required="true" />
+        <column name="gender_id" type="integer" required="true"/>
+        <column name="author_id" type="integer" required="true"/>
+        <foreign-key foreignTable="genders" phpName="Genders" refPhpName="Music">
+            <reference local="gender_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="author">
+            <reference local="author_id" foreign="id"/>
+        </foreign-key>
+    </table>
+
+    <table name="author" phpName="Author">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="varchar" size="255" required="true"/>
+        <column name="nationality" type="varchar" size="128" required="true"/>
+    </table>
+
+    <table name="genders" phpName="Genders">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="varchar" size="128" required="true"/>
+    </table>
+</database>

@@ -3,6 +3,10 @@ var $videoYoutube = $('#video-youtube');
 
 function onYouTubePlayerAPIReady() {
     var videoId = $videoYoutube.attr('video-id');
+    console.log(videoId);
+    if(typeof videoId === 'undefined')
+      videoId = '5QmFK1QPCUo';
+
     player = new YT.Player('video-youtube', {
       height: '100%',
       width: '100%',
@@ -15,7 +19,7 @@ function onYouTubePlayerAPIReady() {
 };
 
 function onAutoPlay(event) {
-    player.playVideo();
+    // player.playVideo();
     console.log(player);
 
   //  requestFullScreen.bind(videoYoutube);
@@ -26,6 +30,20 @@ function onFinish(event) {
         location.href='./';
     }
 };
+
+$(document).keypress(function(e){
+ // console.log(e.charCode);
+
+  if(e.charCode == 47){
+      $('.carousel').carousel('prev');
+  }
+
+  if(e.charCode == 42){
+      $('.carousel').carousel('next');
+  }
+
+});
+
 
 /*var playButton = document.getElementById("play");
 playButton.addEventListener("click", function() {
