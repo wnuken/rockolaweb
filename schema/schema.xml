@@ -1,7 +1,6 @@
-<database name="default" defaultIdMethod="native"
+<database name="rockolaweb" defaultIdMethod="native"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="Rockolaweb"
         >
     <table name="music" phpName="Music">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>

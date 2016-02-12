@@ -1,0 +1,17 @@
+{
+    "propel": {
+        "database": {
+            "connections": {
+                "rockolaweb": {
+                    "adapter": "mysql",
+                    "dsn": "mysql:host=localhost;dbname=rockolaweb",
+                    "user": "developer",
+                    "password": "developer",
+                    "settings": {
+                        "charset": "utf8"
+                    }
+                }
+            }
+        }
+    }
+}

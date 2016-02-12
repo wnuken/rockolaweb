@@ -4,8 +4,8 @@ class viewsController
 {
   static public function Home(){
 
-  	//$firstAuthor = AuthorQuery::create()->findPK(1);
-	//var_dump($firstAuthor);
+  	$firstAuthor = AuthorQuery::create()->filterById(1)->findOne();
+	var_dump($firstAuthor);
 
 
     include_once './views/home.php';

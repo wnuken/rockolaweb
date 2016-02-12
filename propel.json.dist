@@ -1,0 +1,8 @@
+{
+    "propel": {
+        "paths": {
+            "schemaDir": "\/vagrant\/www\/rockolaweb\/schema",
+            "phpDir": "\/vagrant\/www\/rockolaweb\/generated-classes"
+        }
+    }
+}
