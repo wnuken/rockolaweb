@@ -150,7 +150,12 @@
       ?>
 
 
-              <li class="list-group-item"><span class="badge"><?php print $author->getName(); ?></span><?php print $sound->getTitle(); ?></li>
+              <li class="list-group-item" data-tube-id="<?php print $sound->getYoutubeId(); ?>">
+              
+              <i class="label label-info" style="left: 3px;position: absolute;"><?php print $author->getName(); ?></i><span class="badge"><?php print $sound->getRockId(); ?></span>
+              <?php print $sound->getTitle(); ?>
+
+              </li>
              
    
       <?php
