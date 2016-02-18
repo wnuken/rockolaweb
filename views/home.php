@@ -1,3 +1,4 @@
+<?php /*
 <div class="cover-container">
 
    <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,7 +33,7 @@
 
              <div class="col-xs-8">
 
-               <div id="video-youtube" style="height: 371px;"></div>
+               <div id="video-youtube" style="height: 371px;" video-id="Jn88Aun2SxA"></div>
                <div class="controls">
   <!--span id="pause">PAUSAR</span>
   <span id="play">PLAY</span-->
@@ -119,3 +120,100 @@
 
 
 </div>
+ */ ?>
+ <div class="over-video" id="overVideo">
+</div>
+ <div id="video-youtube" video-id="<?php print $videoId; ?>"></div>
+<div class="controls">
+  <!--span id="pause">PAUSAR</span>
+  <span id="play">PLAY</span-->
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Gospel</h4>
+      </div>
+      <div class="modal-body">
+
+      <?php 
+      $count = 0;
+      foreach ($Music as $key => $sound): 
+        $author = $sound->getAuthor();
+        if($count == 0 || $count == 14)
+          print '<div class="row">';
+      
+        if($count == 0 || $count == 7 || $count == 14 || $count == 21 || $count == 28)
+          print '<div class="col-xs-6"><ul class="list-group">';
+      ?>
+
+
+              <li class="list-group-item"><span class="badge"><?php print $author->getName(); ?></span><?php print $sound->getTitle(); ?></li>
+             
+   
+      <?php
+       
+        
+
+        if($count == 6 || $count == 13 || $count == 20 || $count == 27)
+          print '</ul></div>';
+
+
+        if($count == 13){
+          print '</div>';
+        }
+
+        if($count == 27){
+           print '</div>';
+          break;
+        }
+        $count++;
+       endforeach; 
+      /*
+
+          <!--div class="col-xs-6">
+            <ul class="list-group">
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <ul class="list-group">
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+            </ul>
+          </div>
+          <div class="col-xs-6">
+            <ul class="list-group">
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+              <li class="list-group-item"><span class="badge">0001</span>Canción</li>
+            </ul>
+          </div>
+        </div-->
+
+        */ ?>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+

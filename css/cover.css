@@ -76,6 +76,15 @@ body {
 }
 
 
+.over-video {
+  background-color: transparent;
+  width: 100%;
+  min-height: 100%;
+  height: auto !important;
+  position: fixed; 
+  top: 0px;
+  z-index: 1000;
+}
 /*
  * Footer
  */

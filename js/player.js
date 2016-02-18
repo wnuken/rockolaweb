@@ -8,8 +8,8 @@ function onYouTubePlayerAPIReady() {
       videoId = '5QmFK1QPCUo';
 
     player = new YT.Player('video-youtube', {
-      height: '100%',
-      width: '100%',
+      height: '99%',
+      width: '99%',
       videoId: videoId,
       events: {
         'onReady': onAutoPlay,
@@ -20,27 +20,42 @@ function onYouTubePlayerAPIReady() {
 
 function onAutoPlay(event) {
     // player.playVideo();
-    console.log(player);
+    
 
+
+    
   //  requestFullScreen.bind(videoYoutube);
 };
 
 function onFinish(event) {        
     if(event.data === 0) {            
-        location.href='./';
+        location.href='./5QmFK1QPCUo';
     }
 };
 
 $(document).keypress(function(e){
- // console.log(e.charCode);
+ console.log(e.charCode);
 
   if(e.charCode == 47){
-      $('.carousel').carousel('prev');
+      //$('.carousel').carousel('prev');
   }
 
   if(e.charCode == 42){
-      $('.carousel').carousel('next');
+      //$('.carousel').carousel('next');
   }
+
+  if(e.charCode == 13){
+    $('#myModal').modal('toggle');
+  }
+
+
+});
+
+$('div#overVideo').on('click', function(){
+  $('#myModal').modal({
+  show: true,
+  backdrop: 'static'
+  })
 
 });
 

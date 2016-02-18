@@ -2,10 +2,23 @@
 
 class viewsController
 {
-  static public function Home(){
+  static public function Home($videoId = ''){
 
-  	$firstAuthor = AuthorQuery::create()->filterById(1)->findOne();
-	var_dump($firstAuthor);
+
+  	$Music = MusicQuery::create()
+  		->filterByGenderId(5)
+  		->useAuthorQuery() 
+    		->orderByName()
+  		->endUse()
+  		->paginate($page = 1, $rowsPerPage = 28);
+
+
+
+	// var_dump($Music);
+
+	if(!$videoId){
+		$videoId = 'Jn88Aun2SxA';
+	}
 
 
     include_once './views/home.php';
