@@ -17,6 +17,7 @@ CREATE TABLE `music`
     `youtube_id` VARCHAR(24) NOT NULL,
     `gender_id` INTEGER NOT NULL,
     `author_id` INTEGER NOT NULL,
+    `countplay` INTEGER NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `music_fi_43d98c` (`gender_id`),
     INDEX `music_fi_ea464c` (`author_id`),
@@ -53,6 +54,19 @@ CREATE TABLE `genders`
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(128) NOT NULL,
     PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+-- ---------------------------------------------------------------------
+-- songlist
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `songlist`;
+
+CREATE TABLE `songlist`
+(
+    `time` DOUBLE NOT NULL,
+    `song` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`time`)
 ) ENGINE=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier

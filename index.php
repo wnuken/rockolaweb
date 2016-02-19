@@ -6,7 +6,7 @@ include_once('./classes.php');
     $classarray = json_decode($classjson, true);
 
 
-    if(in_array($urlpost[1] , $classarray['postrutes'])){
+    if(in_array($urlpost[1] , $classarray['postroutes'])){
         getRoute()->run();
     }else{
         require_once('./views/general.php');

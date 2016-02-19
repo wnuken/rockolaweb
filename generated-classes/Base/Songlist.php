@@ -2,14 +2,10 @@
 
 namespace Base;
 
-use \Author as ChildAuthor;
-use \AuthorQuery as ChildAuthorQuery;
-use \Genders as ChildGenders;
-use \GendersQuery as ChildGendersQuery;
-use \MusicQuery as ChildMusicQuery;
+use \SonglistQuery as ChildSonglistQuery;
 use \Exception;
 use \PDO;
-use Map\MusicTableMap;
+use Map\SonglistTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -23,18 +19,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'music' table.
+ * Base class that represents a row from the 'songlist' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Music implements ActiveRecordInterface
+abstract class Songlist implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\MusicTableMap';
+    const TABLE_MAP = '\\Map\\SonglistTableMap';
 
 
     /**
@@ -64,56 +60,16 @@ abstract class Music implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the id field.
-     * @var        int
+     * The value for the time field.
+     * @var        double
      */
-    protected $id;
+    protected $time;
 
     /**
-     * The value for the title field.
+     * The value for the song field.
      * @var        string
      */
-    protected $title;
-
-    /**
-     * The value for the rock_id field.
-     * @var        string
-     */
-    protected $rock_id;
-
-    /**
-     * The value for the youtube_id field.
-     * @var        string
-     */
-    protected $youtube_id;
-
-    /**
-     * The value for the gender_id field.
-     * @var        int
-     */
-    protected $gender_id;
-
-    /**
-     * The value for the author_id field.
-     * @var        int
-     */
-    protected $author_id;
-
-    /**
-     * The value for the countplay field.
-     * @var        int
-     */
-    protected $countplay;
-
-    /**
-     * @var        ChildGenders
-     */
-    protected $aGenders;
-
-    /**
-     * @var        ChildAuthor
-     */
-    protected $aAuthor;
+    protected $song;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -124,7 +80,7 @@ abstract class Music implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Music object.
+     * Initializes internal state of Base\Songlist object.
      */
     public function __construct()
     {
@@ -219,9 +175,9 @@ abstract class Music implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Music</code> instance.  If
-     * <code>obj</code> is an instance of <code>Music</code>, delegates to
-     * <code>equals(Music)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Songlist</code> instance.  If
+     * <code>obj</code> is an instance of <code>Songlist</code>, delegates to
+     * <code>equals(Songlist)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -287,7 +243,7 @@ abstract class Music implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Music The current object, for fluid interface
+     * @return $this|Songlist The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -341,222 +297,64 @@ abstract class Music implements ActiveRecordInterface
     }
 
     /**
-     * Get the [id] column value.
+     * Get the [time] column value.
      *
-     * @return int
+     * @return double
      */
-    public function getId()
+    public function getTime()
     {
-        return $this->id;
+        return $this->time;
     }
 
     /**
-     * Get the [title] column value.
+     * Get the [song] column value.
      *
      * @return string
      */
-    public function getTitle()
+    public function getSong()
     {
-        return $this->title;
+        return $this->song;
     }
 
     /**
-     * Get the [rock_id] column value.
+     * Set the value of [time] column.
      *
-     * @return string
+     * @param double $v new value
+     * @return $this|\Songlist The current object (for fluent API support)
      */
-    public function getRockId()
-    {
-        return $this->rock_id;
-    }
-
-    /**
-     * Get the [youtube_id] column value.
-     *
-     * @return string
-     */
-    public function getYoutubeId()
-    {
-        return $this->youtube_id;
-    }
-
-    /**
-     * Get the [gender_id] column value.
-     *
-     * @return int
-     */
-    public function getGenderId()
-    {
-        return $this->gender_id;
-    }
-
-    /**
-     * Get the [author_id] column value.
-     *
-     * @return int
-     */
-    public function getAuthorId()
-    {
-        return $this->author_id;
-    }
-
-    /**
-     * Get the [countplay] column value.
-     *
-     * @return int
-     */
-    public function getCountplay()
-    {
-        return $this->countplay;
-    }
-
-    /**
-     * Set the value of [id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Music The current object (for fluent API support)
-     */
-    public function setId($v)
+    public function setTime($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (double) $v;
         }
 
-        if ($this->id !== $v) {
-            $this->id = $v;
-            $this->modifiedColumns[MusicTableMap::COL_ID] = true;
+        if ($this->time !== $v) {
+            $this->time = $v;
+            $this->modifiedColumns[SonglistTableMap::COL_TIME] = true;
         }
 
         return $this;
-    } // setId()
+    } // setTime()
 
     /**
-     * Set the value of [title] column.
+     * Set the value of [song] column.
      *
      * @param string $v new value
-     * @return $this|\Music The current object (for fluent API support)
+     * @return $this|\Songlist The current object (for fluent API support)
      */
-    public function setTitle($v)
+    public function setSong($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->title !== $v) {
-            $this->title = $v;
-            $this->modifiedColumns[MusicTableMap::COL_TITLE] = true;
+        if ($this->song !== $v) {
+            $this->song = $v;
+            $this->modifiedColumns[SonglistTableMap::COL_SONG] = true;
         }
 
         return $this;
-    } // setTitle()
-
-    /**
-     * Set the value of [rock_id] column.
-     *
-     * @param string $v new value
-     * @return $this|\Music The current object (for fluent API support)
-     */
-    public function setRockId($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->rock_id !== $v) {
-            $this->rock_id = $v;
-            $this->modifiedColumns[MusicTableMap::COL_ROCK_ID] = true;
-        }
-
-        return $this;
-    } // setRockId()
-
-    /**
-     * Set the value of [youtube_id] column.
-     *
-     * @param string $v new value
-     * @return $this|\Music The current object (for fluent API support)
-     */
-    public function setYoutubeId($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->youtube_id !== $v) {
-            $this->youtube_id = $v;
-            $this->modifiedColumns[MusicTableMap::COL_YOUTUBE_ID] = true;
-        }
-
-        return $this;
-    } // setYoutubeId()
-
-    /**
-     * Set the value of [gender_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Music The current object (for fluent API support)
-     */
-    public function setGenderId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->gender_id !== $v) {
-            $this->gender_id = $v;
-            $this->modifiedColumns[MusicTableMap::COL_GENDER_ID] = true;
-        }
-
-        if ($this->aGenders !== null && $this->aGenders->getId() !== $v) {
-            $this->aGenders = null;
-        }
-
-        return $this;
-    } // setGenderId()
-
-    /**
-     * Set the value of [author_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\Music The current object (for fluent API support)
-     */
-    public function setAuthorId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->author_id !== $v) {
-            $this->author_id = $v;
-            $this->modifiedColumns[MusicTableMap::COL_AUTHOR_ID] = true;
-        }
-
-        if ($this->aAuthor !== null && $this->aAuthor->getId() !== $v) {
-            $this->aAuthor = null;
-        }
-
-        return $this;
-    } // setAuthorId()
-
-    /**
-     * Set the value of [countplay] column.
-     *
-     * @param int $v new value
-     * @return $this|\Music The current object (for fluent API support)
-     */
-    public function setCountplay($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->countplay !== $v) {
-            $this->countplay = $v;
-            $this->modifiedColumns[MusicTableMap::COL_COUNTPLAY] = true;
-        }
-
-        return $this;
-    } // setCountplay()
+    } // setSong()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -594,26 +392,11 @@ abstract class Music implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MusicTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SonglistTableMap::translateFieldName('Time', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->time = (null !== $col) ? (double) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MusicTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->title = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MusicTableMap::translateFieldName('RockId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->rock_id = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MusicTableMap::translateFieldName('YoutubeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->youtube_id = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MusicTableMap::translateFieldName('GenderId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->gender_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MusicTableMap::translateFieldName('AuthorId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->author_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MusicTableMap::translateFieldName('Countplay', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->countplay = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SonglistTableMap::translateFieldName('Song', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->song = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -622,10 +405,10 @@ abstract class Music implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = MusicTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 2; // 2 = SonglistTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Music'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Songlist'), 0, $e);
         }
     }
 
@@ -644,12 +427,6 @@ abstract class Music implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aGenders !== null && $this->gender_id !== $this->aGenders->getId()) {
-            $this->aGenders = null;
-        }
-        if ($this->aAuthor !== null && $this->author_id !== $this->aAuthor->getId()) {
-            $this->aAuthor = null;
-        }
     } // ensureConsistency
 
     /**
@@ -673,13 +450,13 @@ abstract class Music implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(MusicTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(SonglistTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildMusicQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildSonglistQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -689,8 +466,6 @@ abstract class Music implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aGenders = null;
-            $this->aAuthor = null;
         } // if (deep)
     }
 
@@ -700,8 +475,8 @@ abstract class Music implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Music::setDeleted()
-     * @see Music::isDeleted()
+     * @see Songlist::setDeleted()
+     * @see Songlist::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -710,11 +485,11 @@ abstract class Music implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MusicTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SonglistTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildMusicQuery::create()
+            $deleteQuery = ChildSonglistQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -745,7 +520,7 @@ abstract class Music implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MusicTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SonglistTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -764,7 +539,7 @@ abstract class Music implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                MusicTableMap::addInstanceToPool($this);
+                SonglistTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -789,25 +564,6 @@ abstract class Music implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
-
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aGenders !== null) {
-                if ($this->aGenders->isModified() || $this->aGenders->isNew()) {
-                    $affectedRows += $this->aGenders->save($con);
-                }
-                $this->setGenders($this->aGenders);
-            }
-
-            if ($this->aAuthor !== null) {
-                if ($this->aAuthor->isModified() || $this->aAuthor->isNew()) {
-                    $affectedRows += $this->aAuthor->save($con);
-                }
-                $this->setAuthor($this->aAuthor);
-            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -840,36 +596,17 @@ abstract class Music implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[MusicTableMap::COL_ID] = true;
-        if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . MusicTableMap::COL_ID . ')');
-        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(MusicTableMap::COL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'id';
+        if ($this->isColumnModified(SonglistTableMap::COL_TIME)) {
+            $modifiedColumns[':p' . $index++]  = 'time';
         }
-        if ($this->isColumnModified(MusicTableMap::COL_TITLE)) {
-            $modifiedColumns[':p' . $index++]  = 'title';
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_ROCK_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'rock_id';
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_YOUTUBE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'youtube_id';
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_GENDER_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'gender_id';
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_AUTHOR_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'author_id';
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_COUNTPLAY)) {
-            $modifiedColumns[':p' . $index++]  = 'countplay';
+        if ($this->isColumnModified(SonglistTableMap::COL_SONG)) {
+            $modifiedColumns[':p' . $index++]  = 'song';
         }
 
         $sql = sprintf(
-            'INSERT INTO music (%s) VALUES (%s)',
+            'INSERT INTO songlist (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -878,26 +615,11 @@ abstract class Music implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
-                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
+                    case 'time':
+                        $stmt->bindValue($identifier, $this->time, PDO::PARAM_STR);
                         break;
-                    case 'title':
-                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
-                        break;
-                    case 'rock_id':
-                        $stmt->bindValue($identifier, $this->rock_id, PDO::PARAM_STR);
-                        break;
-                    case 'youtube_id':
-                        $stmt->bindValue($identifier, $this->youtube_id, PDO::PARAM_STR);
-                        break;
-                    case 'gender_id':
-                        $stmt->bindValue($identifier, $this->gender_id, PDO::PARAM_INT);
-                        break;
-                    case 'author_id':
-                        $stmt->bindValue($identifier, $this->author_id, PDO::PARAM_INT);
-                        break;
-                    case 'countplay':
-                        $stmt->bindValue($identifier, $this->countplay, PDO::PARAM_INT);
+                    case 'song':
+                        $stmt->bindValue($identifier, $this->song, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -906,13 +628,6 @@ abstract class Music implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
-
-        try {
-            $pk = $con->lastInsertId();
-        } catch (Exception $e) {
-            throw new PropelException('Unable to get autoincrement id.', 0, $e);
-        }
-        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -945,7 +660,7 @@ abstract class Music implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MusicTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = SonglistTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -962,25 +677,10 @@ abstract class Music implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getId();
+                return $this->getTime();
                 break;
             case 1:
-                return $this->getTitle();
-                break;
-            case 2:
-                return $this->getRockId();
-                break;
-            case 3:
-                return $this->getYoutubeId();
-                break;
-            case 4:
-                return $this->getGenderId();
-                break;
-            case 5:
-                return $this->getAuthorId();
-                break;
-            case 6:
-                return $this->getCountplay();
+                return $this->getSong();
                 break;
             default:
                 return null;
@@ -999,64 +699,26 @@ abstract class Music implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['Music'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Songlist'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Music'][$this->hashCode()] = true;
-        $keys = MusicTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Songlist'][$this->hashCode()] = true;
+        $keys = SonglistTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getId(),
-            $keys[1] => $this->getTitle(),
-            $keys[2] => $this->getRockId(),
-            $keys[3] => $this->getYoutubeId(),
-            $keys[4] => $this->getGenderId(),
-            $keys[5] => $this->getAuthorId(),
-            $keys[6] => $this->getCountplay(),
+            $keys[0] => $this->getTime(),
+            $keys[1] => $this->getSong(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
-        if ($includeForeignObjects) {
-            if (null !== $this->aGenders) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'genders';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'genders';
-                        break;
-                    default:
-                        $key = 'Genders';
-                }
-
-                $result[$key] = $this->aGenders->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aAuthor) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'author';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'author';
-                        break;
-                    default:
-                        $key = 'Author';
-                }
-
-                $result[$key] = $this->aAuthor->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-        }
 
         return $result;
     }
@@ -1070,11 +732,11 @@ abstract class Music implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Music
+     * @return $this|\Songlist
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MusicTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = SonglistTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1085,31 +747,16 @@ abstract class Music implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Music
+     * @return $this|\Songlist
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setId($value);
+                $this->setTime($value);
                 break;
             case 1:
-                $this->setTitle($value);
-                break;
-            case 2:
-                $this->setRockId($value);
-                break;
-            case 3:
-                $this->setYoutubeId($value);
-                break;
-            case 4:
-                $this->setGenderId($value);
-                break;
-            case 5:
-                $this->setAuthorId($value);
-                break;
-            case 6:
-                $this->setCountplay($value);
+                $this->setSong($value);
                 break;
         } // switch()
 
@@ -1135,28 +782,13 @@ abstract class Music implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = MusicTableMap::getFieldNames($keyType);
+        $keys = SonglistTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setId($arr[$keys[0]]);
+            $this->setTime($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTitle($arr[$keys[1]]);
-        }
-        if (array_key_exists($keys[2], $arr)) {
-            $this->setRockId($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setYoutubeId($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setGenderId($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setAuthorId($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setCountplay($arr[$keys[6]]);
+            $this->setSong($arr[$keys[1]]);
         }
     }
 
@@ -1177,7 +809,7 @@ abstract class Music implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Music The current object, for fluid interface
+     * @return $this|\Songlist The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1197,28 +829,13 @@ abstract class Music implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(MusicTableMap::DATABASE_NAME);
+        $criteria = new Criteria(SonglistTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(MusicTableMap::COL_ID)) {
-            $criteria->add(MusicTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(SonglistTableMap::COL_TIME)) {
+            $criteria->add(SonglistTableMap::COL_TIME, $this->time);
         }
-        if ($this->isColumnModified(MusicTableMap::COL_TITLE)) {
-            $criteria->add(MusicTableMap::COL_TITLE, $this->title);
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_ROCK_ID)) {
-            $criteria->add(MusicTableMap::COL_ROCK_ID, $this->rock_id);
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_YOUTUBE_ID)) {
-            $criteria->add(MusicTableMap::COL_YOUTUBE_ID, $this->youtube_id);
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_GENDER_ID)) {
-            $criteria->add(MusicTableMap::COL_GENDER_ID, $this->gender_id);
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_AUTHOR_ID)) {
-            $criteria->add(MusicTableMap::COL_AUTHOR_ID, $this->author_id);
-        }
-        if ($this->isColumnModified(MusicTableMap::COL_COUNTPLAY)) {
-            $criteria->add(MusicTableMap::COL_COUNTPLAY, $this->countplay);
+        if ($this->isColumnModified(SonglistTableMap::COL_SONG)) {
+            $criteria->add(SonglistTableMap::COL_SONG, $this->song);
         }
 
         return $criteria;
@@ -1236,8 +853,8 @@ abstract class Music implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildMusicQuery::create();
-        $criteria->add(MusicTableMap::COL_ID, $this->id);
+        $criteria = ChildSonglistQuery::create();
+        $criteria->add(SonglistTableMap::COL_TIME, $this->time);
 
         return $criteria;
     }
@@ -1250,7 +867,7 @@ abstract class Music implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getId();
+        $validPk = null !== $this->getTime();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1266,22 +883,22 @@ abstract class Music implements ActiveRecordInterface
 
     /**
      * Returns the primary key for this object (row).
-     * @return int
+     * @return double
      */
     public function getPrimaryKey()
     {
-        return $this->getId();
+        return $this->getTime();
     }
 
     /**
-     * Generic method to set the primary key (id column).
+     * Generic method to set the primary key (time column).
      *
-     * @param       int $key Primary key.
+     * @param       double $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setId($key);
+        $this->setTime($key);
     }
 
     /**
@@ -1290,7 +907,7 @@ abstract class Music implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getId();
+        return null === $this->getTime();
     }
 
     /**
@@ -1299,22 +916,17 @@ abstract class Music implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Music (or compatible) type.
+     * @param      object $copyObj An object of \Songlist (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setTitle($this->getTitle());
-        $copyObj->setRockId($this->getRockId());
-        $copyObj->setYoutubeId($this->getYoutubeId());
-        $copyObj->setGenderId($this->getGenderId());
-        $copyObj->setAuthorId($this->getAuthorId());
-        $copyObj->setCountplay($this->getCountplay());
+        $copyObj->setTime($this->getTime());
+        $copyObj->setSong($this->getSong());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1327,7 +939,7 @@ abstract class Music implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Music Clone of current object.
+     * @return \Songlist Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1341,127 +953,14 @@ abstract class Music implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildGenders object.
-     *
-     * @param  ChildGenders $v
-     * @return $this|\Music The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setGenders(ChildGenders $v = null)
-    {
-        if ($v === null) {
-            $this->setGenderId(NULL);
-        } else {
-            $this->setGenderId($v->getId());
-        }
-
-        $this->aGenders = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildGenders object, it will not be re-added.
-        if ($v !== null) {
-            $v->addMusic($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildGenders object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildGenders The associated ChildGenders object.
-     * @throws PropelException
-     */
-    public function getGenders(ConnectionInterface $con = null)
-    {
-        if ($this->aGenders === null && ($this->gender_id !== null)) {
-            $this->aGenders = ChildGendersQuery::create()->findPk($this->gender_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aGenders->addMusics($this);
-             */
-        }
-
-        return $this->aGenders;
-    }
-
-    /**
-     * Declares an association between this object and a ChildAuthor object.
-     *
-     * @param  ChildAuthor $v
-     * @return $this|\Music The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setAuthor(ChildAuthor $v = null)
-    {
-        if ($v === null) {
-            $this->setAuthorId(NULL);
-        } else {
-            $this->setAuthorId($v->getId());
-        }
-
-        $this->aAuthor = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildAuthor object, it will not be re-added.
-        if ($v !== null) {
-            $v->addMusic($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildAuthor object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildAuthor The associated ChildAuthor object.
-     * @throws PropelException
-     */
-    public function getAuthor(ConnectionInterface $con = null)
-    {
-        if ($this->aAuthor === null && ($this->author_id !== null)) {
-            $this->aAuthor = ChildAuthorQuery::create()->findPk($this->author_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aAuthor->addMusics($this);
-             */
-        }
-
-        return $this->aAuthor;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aGenders) {
-            $this->aGenders->removeMusic($this);
-        }
-        if (null !== $this->aAuthor) {
-            $this->aAuthor->removeMusic($this);
-        }
-        $this->id = null;
-        $this->title = null;
-        $this->rock_id = null;
-        $this->youtube_id = null;
-        $this->gender_id = null;
-        $this->author_id = null;
-        $this->countplay = null;
+        $this->time = null;
+        $this->song = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1482,8 +981,6 @@ abstract class Music implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aGenders = null;
-        $this->aAuthor = null;
     }
 
     /**
@@ -1493,7 +990,7 @@ abstract class Music implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(MusicTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(SonglistTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

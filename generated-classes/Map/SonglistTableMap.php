@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Music;
-use \MusicQuery;
+use \Songlist;
+use \SonglistQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'music' table.
+ * This class defines the structure of the 'songlist' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class MusicTableMap extends TableMap
+class SonglistTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class MusicTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.MusicTableMap';
+    const CLASS_NAME = '.Map.SonglistTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class MusicTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'music';
+    const TABLE_NAME = 'songlist';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Music';
+    const OM_CLASS = '\\Songlist';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Music';
+    const CLASS_DEFAULT = 'Songlist';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,42 +69,17 @@ class MusicTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
-     * the column name for the id field
+     * the column name for the time field
      */
-    const COL_ID = 'music.id';
+    const COL_TIME = 'songlist.time';
 
     /**
-     * the column name for the title field
+     * the column name for the song field
      */
-    const COL_TITLE = 'music.title';
-
-    /**
-     * the column name for the rock_id field
-     */
-    const COL_ROCK_ID = 'music.rock_id';
-
-    /**
-     * the column name for the youtube_id field
-     */
-    const COL_YOUTUBE_ID = 'music.youtube_id';
-
-    /**
-     * the column name for the gender_id field
-     */
-    const COL_GENDER_ID = 'music.gender_id';
-
-    /**
-     * the column name for the author_id field
-     */
-    const COL_AUTHOR_ID = 'music.author_id';
-
-    /**
-     * the column name for the countplay field
-     */
-    const COL_COUNTPLAY = 'music.countplay';
+    const COL_SONG = 'songlist.song';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +93,11 @@ class MusicTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Title', 'RockId', 'YoutubeId', 'GenderId', 'AuthorId', 'Countplay', ),
-        self::TYPE_CAMELNAME     => array('id', 'title', 'rockId', 'youtubeId', 'genderId', 'authorId', 'countplay', ),
-        self::TYPE_COLNAME       => array(MusicTableMap::COL_ID, MusicTableMap::COL_TITLE, MusicTableMap::COL_ROCK_ID, MusicTableMap::COL_YOUTUBE_ID, MusicTableMap::COL_GENDER_ID, MusicTableMap::COL_AUTHOR_ID, MusicTableMap::COL_COUNTPLAY, ),
-        self::TYPE_FIELDNAME     => array('id', 'title', 'rock_id', 'youtube_id', 'gender_id', 'author_id', 'countplay', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Time', 'Song', ),
+        self::TYPE_CAMELNAME     => array('time', 'song', ),
+        self::TYPE_COLNAME       => array(SonglistTableMap::COL_TIME, SonglistTableMap::COL_SONG, ),
+        self::TYPE_FIELDNAME     => array('time', 'song', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -132,11 +107,11 @@ class MusicTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Title' => 1, 'RockId' => 2, 'YoutubeId' => 3, 'GenderId' => 4, 'AuthorId' => 5, 'Countplay' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'title' => 1, 'rockId' => 2, 'youtubeId' => 3, 'genderId' => 4, 'authorId' => 5, 'countplay' => 6, ),
-        self::TYPE_COLNAME       => array(MusicTableMap::COL_ID => 0, MusicTableMap::COL_TITLE => 1, MusicTableMap::COL_ROCK_ID => 2, MusicTableMap::COL_YOUTUBE_ID => 3, MusicTableMap::COL_GENDER_ID => 4, MusicTableMap::COL_AUTHOR_ID => 5, MusicTableMap::COL_COUNTPLAY => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'title' => 1, 'rock_id' => 2, 'youtube_id' => 3, 'gender_id' => 4, 'author_id' => 5, 'countplay' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Time' => 0, 'Song' => 1, ),
+        self::TYPE_CAMELNAME     => array('time' => 0, 'song' => 1, ),
+        self::TYPE_COLNAME       => array(SonglistTableMap::COL_TIME => 0, SonglistTableMap::COL_SONG => 1, ),
+        self::TYPE_FIELDNAME     => array('time' => 0, 'song' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -149,20 +124,15 @@ class MusicTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('music');
-        $this->setPhpName('Music');
+        $this->setName('songlist');
+        $this->setPhpName('Songlist');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Music');
+        $this->setClassName('\\Songlist');
         $this->setPackage('');
-        $this->setUseIdGenerator(true);
+        $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', true, 255, null);
-        $this->addColumn('rock_id', 'RockId', 'VARCHAR', true, 24, null);
-        $this->addColumn('youtube_id', 'YoutubeId', 'VARCHAR', true, 24, null);
-        $this->addForeignKey('gender_id', 'GenderId', 'INTEGER', 'genders', 'id', true, null, null);
-        $this->addForeignKey('author_id', 'AuthorId', 'INTEGER', 'author', 'id', true, null, null);
-        $this->addColumn('countplay', 'Countplay', 'INTEGER', true, null, null);
+        $this->addPrimaryKey('time', 'Time', 'DOUBLE', true, null, null);
+        $this->addColumn('song', 'Song', 'VARCHAR', true, 50, null);
     } // initialize()
 
     /**
@@ -170,20 +140,6 @@ class MusicTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Genders', '\\Genders', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':gender_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
-        $this->addRelation('Author', '\\Author', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':author_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
     } // buildRelations()
 
     /**
@@ -202,11 +158,11 @@ class MusicTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Time', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Time', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -223,10 +179,10 @@ class MusicTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
+        return (double) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Time', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -243,7 +199,7 @@ class MusicTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? MusicTableMap::CLASS_DEFAULT : MusicTableMap::OM_CLASS;
+        return $withPrefix ? SonglistTableMap::CLASS_DEFAULT : SonglistTableMap::OM_CLASS;
     }
 
     /**
@@ -257,22 +213,22 @@ class MusicTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Music object, last column rank)
+     * @return array           (Songlist object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = MusicTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = MusicTableMap::getInstanceFromPool($key))) {
+        $key = SonglistTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = SonglistTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + MusicTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + SonglistTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = MusicTableMap::OM_CLASS;
-            /** @var Music $obj */
+            $cls = SonglistTableMap::OM_CLASS;
+            /** @var Songlist $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            MusicTableMap::addInstanceToPool($obj, $key);
+            SonglistTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -295,18 +251,18 @@ class MusicTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = MusicTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = MusicTableMap::getInstanceFromPool($key))) {
+            $key = SonglistTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = SonglistTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Music $obj */
+                /** @var Songlist $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                MusicTableMap::addInstanceToPool($obj, $key);
+                SonglistTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -327,21 +283,11 @@ class MusicTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(MusicTableMap::COL_ID);
-            $criteria->addSelectColumn(MusicTableMap::COL_TITLE);
-            $criteria->addSelectColumn(MusicTableMap::COL_ROCK_ID);
-            $criteria->addSelectColumn(MusicTableMap::COL_YOUTUBE_ID);
-            $criteria->addSelectColumn(MusicTableMap::COL_GENDER_ID);
-            $criteria->addSelectColumn(MusicTableMap::COL_AUTHOR_ID);
-            $criteria->addSelectColumn(MusicTableMap::COL_COUNTPLAY);
+            $criteria->addSelectColumn(SonglistTableMap::COL_TIME);
+            $criteria->addSelectColumn(SonglistTableMap::COL_SONG);
         } else {
-            $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.title');
-            $criteria->addSelectColumn($alias . '.rock_id');
-            $criteria->addSelectColumn($alias . '.youtube_id');
-            $criteria->addSelectColumn($alias . '.gender_id');
-            $criteria->addSelectColumn($alias . '.author_id');
-            $criteria->addSelectColumn($alias . '.countplay');
+            $criteria->addSelectColumn($alias . '.time');
+            $criteria->addSelectColumn($alias . '.song');
         }
     }
 
@@ -354,7 +300,7 @@ class MusicTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(MusicTableMap::DATABASE_NAME)->getTable(MusicTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(SonglistTableMap::DATABASE_NAME)->getTable(SonglistTableMap::TABLE_NAME);
     }
 
     /**
@@ -362,16 +308,16 @@ class MusicTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MusicTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(MusicTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new MusicTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SonglistTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(SonglistTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new SonglistTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Music or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Songlist or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Music object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Songlist object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -382,27 +328,27 @@ class MusicTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MusicTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SonglistTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Music) { // it's a model object
+        } elseif ($values instanceof \Songlist) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(MusicTableMap::DATABASE_NAME);
-            $criteria->add(MusicTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SonglistTableMap::DATABASE_NAME);
+            $criteria->add(SonglistTableMap::COL_TIME, (array) $values, Criteria::IN);
         }
 
-        $query = MusicQuery::create()->mergeWith($criteria);
+        $query = SonglistQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            MusicTableMap::clearInstancePool();
+            SonglistTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                MusicTableMap::removeInstanceFromPool($singleval);
+                SonglistTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -410,20 +356,20 @@ class MusicTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the music table.
+     * Deletes all rows from the songlist table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return MusicQuery::create()->doDeleteAll($con);
+        return SonglistQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Music or Criteria object.
+     * Performs an INSERT on the database, given a Songlist or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Music object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Songlist object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -432,22 +378,18 @@ class MusicTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MusicTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SonglistTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Music object
-        }
-
-        if ($criteria->containsKey(MusicTableMap::COL_ID) && $criteria->keyContainsValue(MusicTableMap::COL_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.MusicTableMap::COL_ID.')');
+            $criteria = $criteria->buildCriteria(); // build Criteria from Songlist object
         }
 
 
         // Set the correct dbName
-        $query = MusicQuery::create()->mergeWith($criteria);
+        $query = SonglistQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -456,7 +398,7 @@ class MusicTableMap extends TableMap
         });
     }
 
-} // MusicTableMap
+} // SonglistTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-MusicTableMap::buildTableMap();
+SonglistTableMap::buildTableMap();

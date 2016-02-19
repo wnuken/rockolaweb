@@ -1,6 +1,7 @@
 {
-    "postrutes":[
-        "porpost",
-        "sendpay"
+    "postroutes":[
+        "setlist",
+        "getsong",
+        "setcredits"
     ]
 }

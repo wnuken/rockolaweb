@@ -9,6 +9,7 @@
         <column name="youtube_id" type="varchar" size="24" required="true" />
         <column name="gender_id" type="integer" required="true"/>
         <column name="author_id" type="integer" required="true"/>
+        <column name="countplay" type="integer" required="true"/>
         <foreign-key foreignTable="genders" phpName="Genders" refPhpName="Music">
             <reference local="gender_id" foreign="id"/>
         </foreign-key>
@@ -26,5 +27,10 @@
     <table name="genders" phpName="Genders">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="varchar" size="128" required="true"/>
+    </table>
+
+    <table name="songlist" phpName="Songlist">
+        <column name="time" type="double" required="true" primaryKey="true"/>
+        <column name="song" type="varchar" size="50" required="true"/>
     </table>
 </database>

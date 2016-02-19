@@ -26,6 +26,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMusicQuery orderByYoutubeId($order = Criteria::ASC) Order by the youtube_id column
  * @method     ChildMusicQuery orderByGenderId($order = Criteria::ASC) Order by the gender_id column
  * @method     ChildMusicQuery orderByAuthorId($order = Criteria::ASC) Order by the author_id column
+ * @method     ChildMusicQuery orderByCountplay($order = Criteria::ASC) Order by the countplay column
  *
  * @method     ChildMusicQuery groupById() Group by the id column
  * @method     ChildMusicQuery groupByTitle() Group by the title column
@@ -33,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMusicQuery groupByYoutubeId() Group by the youtube_id column
  * @method     ChildMusicQuery groupByGenderId() Group by the gender_id column
  * @method     ChildMusicQuery groupByAuthorId() Group by the author_id column
+ * @method     ChildMusicQuery groupByCountplay() Group by the countplay column
  *
  * @method     ChildMusicQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildMusicQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -56,7 +58,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMusic findOneByRockId(string $rock_id) Return the first ChildMusic filtered by the rock_id column
  * @method     ChildMusic findOneByYoutubeId(string $youtube_id) Return the first ChildMusic filtered by the youtube_id column
  * @method     ChildMusic findOneByGenderId(int $gender_id) Return the first ChildMusic filtered by the gender_id column
- * @method     ChildMusic findOneByAuthorId(int $author_id) Return the first ChildMusic filtered by the author_id column *
+ * @method     ChildMusic findOneByAuthorId(int $author_id) Return the first ChildMusic filtered by the author_id column
+ * @method     ChildMusic findOneByCountplay(int $countplay) Return the first ChildMusic filtered by the countplay column *
 
  * @method     ChildMusic requirePk($key, ConnectionInterface $con = null) Return the ChildMusic by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMusic requireOne(ConnectionInterface $con = null) Return the first ChildMusic matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -67,6 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMusic requireOneByYoutubeId(string $youtube_id) Return the first ChildMusic filtered by the youtube_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMusic requireOneByGenderId(int $gender_id) Return the first ChildMusic filtered by the gender_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMusic requireOneByAuthorId(int $author_id) Return the first ChildMusic filtered by the author_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMusic requireOneByCountplay(int $countplay) Return the first ChildMusic filtered by the countplay column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMusic[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMusic objects based on current ModelCriteria
  * @method     ChildMusic[]|ObjectCollection findById(int $id) Return ChildMusic objects filtered by the id column
@@ -75,6 +79,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMusic[]|ObjectCollection findByYoutubeId(string $youtube_id) Return ChildMusic objects filtered by the youtube_id column
  * @method     ChildMusic[]|ObjectCollection findByGenderId(int $gender_id) Return ChildMusic objects filtered by the gender_id column
  * @method     ChildMusic[]|ObjectCollection findByAuthorId(int $author_id) Return ChildMusic objects filtered by the author_id column
+ * @method     ChildMusic[]|ObjectCollection findByCountplay(int $countplay) Return ChildMusic objects filtered by the countplay column
  * @method     ChildMusic[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -167,7 +172,7 @@ abstract class MusicQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, title, rock_id, youtube_id, gender_id, author_id FROM music WHERE id = :p0';
+        $sql = 'SELECT id, title, rock_id, youtube_id, gender_id, author_id, countplay FROM music WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -469,6 +474,47 @@ abstract class MusicQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(MusicTableMap::COL_AUTHOR_ID, $authorId, $comparison);
+    }
+
+    /**
+     * Filter the query on the countplay column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCountplay(1234); // WHERE countplay = 1234
+     * $query->filterByCountplay(array(12, 34)); // WHERE countplay IN (12, 34)
+     * $query->filterByCountplay(array('min' => 12)); // WHERE countplay > 12
+     * </code>
+     *
+     * @param     mixed $countplay The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMusicQuery The current query, for fluid interface
+     */
+    public function filterByCountplay($countplay = null, $comparison = null)
+    {
+        if (is_array($countplay)) {
+            $useMinMax = false;
+            if (isset($countplay['min'])) {
+                $this->addUsingAlias(MusicTableMap::COL_COUNTPLAY, $countplay['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($countplay['max'])) {
+                $this->addUsingAlias(MusicTableMap::COL_COUNTPLAY, $countplay['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(MusicTableMap::COL_COUNTPLAY, $countplay, $comparison);
     }
 
     /**
