@@ -24,61 +24,61 @@ function onYouTubePlayerAPIReady() {
 };
 
 function onAutoPlay(event) {
-    player.playVideo();
-};
+    // player.playVideo();
+  };
 
-function onFinish(event) {        
-  if(event.data === 0) {
+  function onFinish(event) {        
+    if(event.data === 0) {
 
-    var params = {
+      var params = {
         "url":"getsong"
       };
 
+      $.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params,
+        async: true,
+        success: function(response) {
+          console.log(response);
+          if(response.Playing !== null){
+            location.href='./' + response.Playing;
+          }else{
+            location.href='./';
+          }
+        },
+        error: function() {
+          var message = "Rayos parece que no puedo traer datos";
+          console.log(message);
+        }
+      });
+
+
+
+    }
+  };
+
+  function setCredits(credits){
+    var params = {
+      "url":"setcredits",
+      "credits": credits
+    };
+
     $.ajax({
-          type: "POST",
-          url: params.url,
-          dataType: 'json',
-          data: params,
-          async: true,
-          success: function(response) {
-            console.log(response);
-            if(response.Playing !== null){
-              location.href='./' + response.Playing;
-            }else{
-              location.href='./';
-            }
-          },
-          error: function() {
-            var message = "Rayos parece que no puedo traer datos";
-            console.log(message);
-          }
-        });
-
-
-    
-  }
-};
-
-function setCredits(credits){
-  var params = {
-        "url":"setcredits",
-        "credits": credits
-      };
-
-  $.ajax({
-          type: "POST",
-          url: params.url,
-          dataType: 'json',
-          data: params,
-          async: true,
-          success: function(response) {
-            console.log(response);
-          },
-          error: function() {
-            var response = "Rayos parece que no puedo traer datos";
-            console.log(message);
-          }
-        });
+      type: "POST",
+      url: params.url,
+      dataType: 'json',
+      data: params,
+      async: true,
+      success: function(response) {
+        console.log(response);
+      },
+      error: function() {
+        var response = "Rayos parece que no puedo traer datos";
+        console.log(message);
+      }
+    });
   // return response;
 };
 
@@ -91,6 +91,34 @@ function launchFullScreen(element) {
     element.webkitRequestFullScreen();
   }
 }
+
+function songsList(page, gender){
+
+  var params = {
+        "url":"songslist",
+        "page": page,
+        "gender": gender
+      };
+
+  $.ajax({
+    type: "POST",
+    url: params.url,
+    dataType: 'json',
+    data: params,
+    async: true,
+    success: function(response) {
+        console.log(response);
+        $('.modal-body', $myModal).html(response.html);
+        $myModal.attr('data-cont', response.songscont);
+      },
+      error: function() {
+        var message = "Rayos parece que no puedo traer datos";
+        console.log(message);
+      }
+    });
+
+  
+};
 
 launchFullScreen(document.documentElement);
 
@@ -154,14 +182,28 @@ $(document).keypress(function(e){
 
   $('i#numSong', $myModal).html(codeSearh);
 
+  var genderid = parseInt($myModal.attr('data-gender'));
+  var pageid = parseInt($myModal.attr('data-page'));
+  var pagecount = parseInt($myModal.attr('data-cont'));
 
   if(e.charCode == 47){
       //$('.carousel').carousel('prev');
+      if(pageid > 1){
+        pageid = pageid - 1;
+        songsList(pageid, genderid);
+      }
+
     }
 
     if(e.charCode == 42){
       //$('.carousel').carousel('next');
+      if(pagecount == 28){
+        pageid = pageid + 1;
+        songsList(pageid, genderid);
+      }
     }
+
+    $myModal.attr('data-page', pageid);
 
     if(e.charCode == 13){
       $('#myModal').modal('toggle');

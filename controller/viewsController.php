@@ -4,19 +4,40 @@ class viewsController
 {
 	static public function Home($videoId = ''){
 
+		$initalPage = 1;
+		$genderId = 1;
+
+		$Gender = GendersQuery::create()
+			->orderByName()
+			->findOne();
+
+		if(!empty($Gender)){
+			$genderId = $Gender->getId();
+		}
+
+		$Genders = GendersQuery::create()
+			->orderByName()
+			->find();
 
 		$Music = MusicQuery::create()
-		->filterByGenderId(5)
-		->useAuthorQuery() 
-		->orderByName()
-		->endUse()
-		->paginate($page = 1, $rowsPerPage = 28);
+			->filterByGenderId($genderId)
+			->useAuthorQuery() 
+				->orderByName()
+			->endUse()
+			->orderByTitle()
+			->paginate($page = 1, $rowsPerPage = 28);
+
+		$songscont = $Music->count();
 
 		if(!$videoId){
 			$videoId = 'rXtck9odkiA';
-		}
+			$Song = SonglistQuery::create()->findOne();
 
-		// var_dump($_COOKIE);
+			if(!empty($Song)){
+				$videoId = $Song->getSong();
+				$Song->delete();
+			}
+		}
 
 		$credits = 0;
 		if (isset($_COOKIE['credits'])){
@@ -84,6 +105,7 @@ class viewsController
 	}
 
 	static public function SetCredits(){
+		// $credits = 1;
 		$credits = $_POST['credits'];
 		setcookie("credits", $credits, strtotime( '+1 days' ));
 
@@ -97,6 +119,40 @@ class viewsController
 
 		print $JsonResult;
 
+
+	}
+
+	static public function SongsList(){
+
+
+		$initalPage = $_POST['page'];
+		$gender = $_POST['gender'];
+
+		$Music = MusicQuery::create()
+		->filterByGenderId($gender)
+		->useAuthorQuery() 
+			->orderByName()
+		->endUse()
+		->orderByTitle()
+		->paginate($page = $initalPage, $rowsPerPage = 28);
+
+		$songscont = $Music->count();
+
+		ob_start(); # open buffer
+		include( './views/songslist.php' );
+		$htmlData = ob_get_contents();
+		ob_end_clean(); # close buffer
+
+		$ArrayResult = array(
+			'message' => 'songslist',
+			'status' => true,
+			'html' => $htmlData,
+			'songscont' => $songscont,
+			);
+
+		$JsonResult = json_encode($ArrayResult);
+
+		print $JsonResult;
 
 	}
 

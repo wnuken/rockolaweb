@@ -2,6 +2,7 @@
     "postroutes":[
         "setlist",
         "getsong",
-        "setcredits"
+        "setcredits",
+        "songslist"
     ]
 }
