@@ -6,7 +6,7 @@
   <span id="play">PLAY</span-->
   </div>
   <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" 
+  <div class="modal fade" id="songsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" 
   data-page="<?php print $initalPage; ?>" 
   data-gender="<?php print $genderId; ?>"
   data-cont="<?php print $songscont; ?>">
@@ -14,7 +14,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel"><?php print $Gender->getName(); ?> 
+          <h4 class="modal-title" id="myModalLabel"><strong><?php print $Gender->getName(); ?> </strong>
           <span class="label label-warning" style="left: 3px;position: absolute;">Creditos: <i id="credits"><?php print $credits; ?></i></span>
             <span class="label label-warning" style="right: 3px;position: absolute; width: 75px;height: 20px;"><i id="numSong"></i></span>
           </h4>
@@ -27,14 +27,19 @@
    </div>
  </div>
 
- <div class="genders" style="
+ <div class="genders" id="genders" style="
   position: absolute;
     top: 10%;
     left: 50%;">
   <ul class="list-group">
    <?php 
    foreach ($Genders as $key => $gen) {
-     print '<li class="list-group-item">' . $gen->getName() . '</li>';
+      $active = 0;
+    if($key == 0)
+      $active = 1;
+
+
+     print '<li class="list-group-item" data-index="' . $key . '" data-active="' . $active . '" data-genderid="'. $gen->getId() .'">' . $gen->getName() . '</li>';
    }
 
    ?>

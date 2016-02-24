@@ -1,14 +1,14 @@
 
-var $myModal = $('div#myModal');
+
+var $songsModal = $('div#songsModal');
 var player;
-var $videoYoutube = $('#video-youtube');
+var $videoYoutube = $('div#video-youtube');
 var countNumber = 0;
 var codeSearh = '';
-var credits = parseInt($('i#credits', $myModal).html());
+var credits = parseInt($('i#credits', $songsModal).html());
 
 function onYouTubePlayerAPIReady() {
   var videoId = $videoYoutube.attr('video-id');
-  console.log(videoId);
   if(typeof videoId === 'undefined')
     videoId = '5QmFK1QPCUo';
 
@@ -24,45 +24,13 @@ function onYouTubePlayerAPIReady() {
 };
 
 function onAutoPlay(event) {
-    // player.playVideo();
-  };
+  // player.playVideo();
+};
 
-  function onFinish(event) {        
-    if(event.data === 0) {
-
-      var params = {
-        "url":"getsong"
-      };
-
-      $.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: params,
-        async: true,
-        success: function(response) {
-          console.log(response);
-          if(response.Playing !== null){
-            location.href='./' + response.Playing;
-          }else{
-            location.href='./';
-          }
-        },
-        error: function() {
-          var message = "Rayos parece que no puedo traer datos";
-          console.log(message);
-        }
-      });
-
-
-
-    }
-  };
-
-  function setCredits(credits){
+function onFinish(event) {        
+  if(event.data === 0) {
     var params = {
-      "url":"setcredits",
-      "credits": credits
+      "url":"getsong"
     };
 
     $.ajax({
@@ -73,13 +41,41 @@ function onAutoPlay(event) {
       async: true,
       success: function(response) {
         console.log(response);
+        if(response.Playing !== null){
+          location.href='./' + response.Playing;
+        }else{
+          location.href='./';
+        }
       },
       error: function() {
-        var response = "Rayos parece que no puedo traer datos";
+        var message = "Rayos parece que no puedo traer datos";
         console.log(message);
       }
     });
-  // return response;
+  }
+};
+
+function setCredits(credits){
+  var params = {
+    "url":"setcredits",
+    "credits": credits
+  };
+
+  $.ajax({
+    type: "POST",
+    url: params.url,
+    dataType: 'json',
+    data: params,
+    async: true,
+    success: function(response) {
+      console.log(response);
+      $('i#credits', $songsModal).html(credits);
+    },
+    error: function() {
+      var response = "Rayos parece que no puedo traer datos";
+      console.log(message);
+    }
+  });
 };
 
 function launchFullScreen(element) {
@@ -95,10 +91,10 @@ function launchFullScreen(element) {
 function songsList(page, gender){
 
   var params = {
-        "url":"songslist",
-        "page": page,
-        "gender": gender
-      };
+    "url":"songslist",
+    "page": page,
+    "gender": gender
+  };
 
   $.ajax({
     type: "POST",
@@ -107,15 +103,15 @@ function songsList(page, gender){
     data: params,
     async: true,
     success: function(response) {
-        console.log(response);
-        $('.modal-body', $myModal).html(response.html);
-        $myModal.attr('data-cont', response.songscont);
-      },
-      error: function() {
-        var message = "Rayos parece que no puedo traer datos";
-        console.log(message);
-      }
-    });
+      console.log(response);
+      $('.modal-body', $songsModal).html(response.html);
+      $songsModal.attr('data-cont', response.songscont);
+    },
+    error: function() {
+      var message = "Rayos parece que no puedo traer datos";
+      console.log(message);
+    }
+  });
 
   
 };
@@ -123,25 +119,12 @@ function songsList(page, gender){
 launchFullScreen(document.documentElement);
 
 $(document).keypress(function(e){
- console.log(e.charCode);
-
 
  if(e.charCode > 47 && e.charCode < 58){
-  countNumber++;
-  if(e.charCode == 48) codeSearh = codeSearh + '0';
-  if(e.charCode == 49) codeSearh = codeSearh + '1';
-  if(e.charCode == 50) codeSearh = codeSearh + '2';
-  if(e.charCode == 51) codeSearh = codeSearh + '3';
-  if(e.charCode == 52) codeSearh = codeSearh + '4';
-  if(e.charCode == 53) codeSearh = codeSearh + '5';
-  if(e.charCode == 54) codeSearh = codeSearh + '6';
-  if(e.charCode == 55) codeSearh = codeSearh + '7';
-  if(e.charCode == 56) codeSearh = codeSearh + '8';
-  if(e.charCode == 57) codeSearh = codeSearh + '9';
+    codeSearh = codeSearh + String.fromCharCode(e.charCode);
     //console.log(countNumber);
     // console.log(credits);
-    if(countNumber == 5){
-      countNumber = 0;
+    if(codeSearh.length == 5){
       var params = {
         "url":"setlist",
         "id": codeSearh
@@ -159,9 +142,7 @@ $(document).keypress(function(e){
             if(response.Songlist !== null){
               credits = credits - 1;
               setCredits(credits);
-              $('i#credits', $myModal).html(credits);
             }
-            //$('div#loe-preview', $that).html(response);
           },
           error: function() {
             var message = "Rayos parece que no puedo traer datos";
@@ -170,21 +151,19 @@ $(document).keypress(function(e){
         });
       }
 
-
       codeSearh = '';
     }
   }
 
-  if(e.charCode == 42 || e.charCode == 43 || e.charCode == 45 || e.charCode == 46 || e.charCode == 47){
+  if(e.charCode > 41 &&  e.charCode < 48){
     codeSearh = '';
-    countNumber = 0;
   }
 
-  $('i#numSong', $myModal).html(codeSearh);
+  $('i#numSong', $songsModal).html(codeSearh);
 
-  var genderid = parseInt($myModal.attr('data-gender'));
-  var pageid = parseInt($myModal.attr('data-page'));
-  var pagecount = parseInt($myModal.attr('data-cont'));
+  var genderid = parseInt($songsModal.attr('data-gender'));
+  var pageid = parseInt($songsModal.attr('data-page'));
+  var pagecount = parseInt($songsModal.attr('data-cont'));
 
   if(e.charCode == 47){
       //$('.carousel').carousel('prev');
@@ -203,10 +182,48 @@ $(document).keypress(function(e){
       }
     }
 
-    $myModal.attr('data-page', pageid);
+    $songsModal.attr('data-page', pageid);
 
     if(e.charCode == 13){
-      $('#myModal').modal('toggle');
+      $('#songsModal').modal('toggle');
+    }
+
+    if(e.charCode == 43 || e.charCode == 45){
+      var $gendersUl = $('div#genders ul');
+      var $genders = $('div#genders ul li');
+      var len = $genders.length - 1;
+      var $curentActive = {};
+      $.each($genders, function(index, element){
+        var $that = $(this);
+        var active = parseInt($that.attr('data-active'));
+        if(active == 1){
+          $curentActive = $(this);
+        }
+      });
+
+      $curentActive.attr('data-active', '0');
+      var dataIndex = parseInt($curentActive.attr('data-index'));
+      var $selectElement = {};
+      if(dataIndex == len && e.charCode == 43){
+        $selectElement = $('li:first', $gendersUl).attr('data-active', '1');
+      }else if(dataIndex == 0 && e.charCode == 45){
+        $selectElement = $('li:last', $gendersUl).attr('data-active', '1');
+      }else if (e.charCode == 43){
+        $selectElement = $curentActive.next().attr('data-active', '1');
+      }else if (e.charCode == 45){
+        $selectElement = $curentActive.prev().attr('data-active', '1');
+      }
+
+      console.log($selectElement.attr('data-genderid'));
+      pageid = 1;
+      genderid = $selectElement.attr('data-genderid');
+      songsList(pageid, genderid);
+      var nameGender = $selectElement.html();
+      $('h4#myModalLabel strong', $songsModal).html(nameGender);
+      $songsModal.attr('data-gender', genderid);
+      
+
+
     }
 
 
@@ -215,13 +232,12 @@ $(document).keypress(function(e){
 // $(document).on('' function(e){});
 
 $(document).on('click', function(){
-  $('#myModal').modal({
+  $('#songsModal').modal({
     show: true,
     backdrop: 'static'
   })
   credits = credits + 1;
   setCredits(credits);
-  $('i#credits', $myModal).html(credits);
 
 });
 

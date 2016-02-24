@@ -105,8 +105,8 @@ class viewsController
 	}
 
 	static public function SetCredits(){
-		// $credits = 1;
 		$credits = $_POST['credits'];
+		$credits = 1;
 		setcookie("credits", $credits, strtotime( '+1 days' ));
 
 		$ArrayResult = array(
