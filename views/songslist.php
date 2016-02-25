@@ -12,8 +12,12 @@ if($count == 0 || $count == 7 || $count == 14 || $count == 21 || $count == 28)
 
 <li class="list-group-item" data-tube-id="<?php print $sound->getYoutubeId(); ?>">
 
-  <i class="label label-info" style="left: 3px;position: absolute;"><?php print $author->getName(); ?></i><span class="badge"><?php print $sound->getRockId(); ?></span>
-  <?php print $sound->getTitle(); ?>
+  <i class="label label-info" style="left: 3px; top:1px;position: absolute;">
+  <?php print ucwords(strtolower($author->getName())); ?>
+  </i>
+  <span class="badge"><?php print $sound->getRockId(); ?></span>
+  <strong style="position: relative;
+    top: 7px;"><?php print ucwords(strtolower($sound->getTitle())); ?></strong>
 
 </li>
 

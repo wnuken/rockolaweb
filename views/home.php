@@ -28,18 +28,26 @@
  </div>
 
  <div class="genders" id="genders" style="
-  position: absolute;
+      z-index: 1050;
+    position: absolute;
     top: 10%;
-    left: 50%;">
+    left: 44%;
+    display: none;
+    min-width: 250px;
+    ">
   <ul class="list-group">
    <?php 
    foreach ($Genders as $key => $gen) {
-      $active = 0;
-    if($key == 0)
-      $active = 1;
+      $activeId = 0;
+      $activeClass = '';
+    if($key == 0){
+      $activeId = 1;
+      $activeClass = 'active';
+    }
+      
 
 
-     print '<li class="list-group-item" data-index="' . $key . '" data-active="' . $active . '" data-genderid="'. $gen->getId() .'">' . $gen->getName() . '</li>';
+     print '<li class="list-group-item ' .$activeClass.'" data-index="' . $key . '" data-active="' . $activeId . '" data-genderid="'. $gen->getId() .'">' . $gen->getName() . '</li>';
    }
 
    ?>
